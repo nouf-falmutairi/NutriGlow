@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr" id="html-root">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>NutriGlow — Your Plan</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link
+    href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;800&display=swap"
+    rel="stylesheet"
+  />
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}" />
+</head>
+<body>
+  <!-- Language toggle -->
+  <div class="lang-toggle" role="group" aria-label="Language switch">
+    <button type="button" id="lang-en-btn" data-lang="en">EN</button>
+    <button type="button" id="lang-ar-btn" data-lang="ar">AR</button>
+  </div>
+
+  <div class="app-shell">
+    <!-- Sticky top nav: brand + Meal Plan / Shopping List tabs + actions -->
+    <nav class="topnav">
+      <div class="topnav-inner">
+        <div class="topnav-brand">
+          <div class="glyph-sm"></div>
+          <span id="brand-name-sm">NutriGlow</span>
+        </div>
+
+        <div class="tabs" role="tablist">
+          <button type="button" class="tab-btn active" id="tab-meal-plan" data-view="meal_plan">
+            Meal Plan
+          </button>
+          <button type="button" class="tab-btn" id="tab-shopping-list" data-view="shopping_list">
+            Shopping List
+          </button>
+        </div>
+
+        <div class="topnav-actions">
+          <button type="button" class="btn btn-ghost" id="download-pdf-btn">
+            <span id="download-pdf-label">Download PDF</span>
+          </button>
+          <button type="button" class="btn btn-primary" id="new-plan-btn">
+            <span id="new-plan-label">Generate a new plan</span>
+          </button>
+        </div>
+      </div>
+    </nav>
+
+    <main class="results-main">
+      <!-- ===================== MEAL PLAN VIEW ===================== -->
+      <section id="view-meal-plan">
+        <div class="results-header">
+          <h2 id="meal-plan-title">Your 5-Day Meal Plan</h2>
+          <p class="summary-line" id="meal-plan-summary"></p>
+          <div class="summary-chips" id="summary-chips"></div>
+        </div>
+
+        <p class="relaxed-note" id="relaxed-note"></p>
+
+        <div class="day-rail" id="day-rail"></div>
+
+        <div id="day-cards"></div>
+      </section>
+
+      <!-- ===================== SHOPPING LIST VIEW ===================== -->
+      <section id="view-shopping-list" class="hidden">
+        <div class="results-header">
+          <h2 id="shopping-list-title">Your Shopping List</h2>
+          <p class="summary-line" id="shopping-list-summary"></p>
+        </div>
+
+        <div class="shopping-card">
+          <ul class="shopping-list" id="shopping-list"></ul>
+        </div>
+      </section>
+    </main>
+  </div>
+
+  <!-- Exit confirmation modal -->
+  <div class="modal-overlay" id="exit-modal">
+    <div class="modal-card">
+      <div class="modal-icon">
+        <svg width="26" height="26" viewBox="0 0 24 24" fill="none">
+          <path
+            d="M12 9v4m0 4h.01M10.29 3.86l-8.18 14.18A2 2 0 003.82 21h16.36a2 2 0 001.71-2.96L13.71 3.86a2 2 0 00-3.42 0z"
+            stroke="#E8744C"
+            stroke-width="1.8"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+          />
+        </svg>
+      </div>
+      <h3 id="modal-title">You're going to lose your current plan, are you sure?</h3>
+      <p id="modal-body">Starting a new plan will clear the meal plan and shopping list you have open right now.</p>
+      <div class="modal-actions">
+        <button type="button" class="btn btn-primary" id="modal-confirm-btn">Yes, generate new plan</button>
+        <button type="button" class="btn btn-ghost" id="modal-cancel-btn">No, let me save the result</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Loading overlay (shown briefly while reading/restoring plan data) -->
+  <div class="loading-overlay hidden" id="loading-overlay">
+    <div class="spinner"></div>
+    <p id="loading-message">Putting your meals together…</p>
+  </div>
+
+  <script src="{{ url_for('static', filename='js/translations.js') }}"></script>
+  <script src="{{ url_for('static', filename='js/results.js') }}"></script>
+</body>
+</html>

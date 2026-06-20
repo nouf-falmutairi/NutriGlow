@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr" id="html-root">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>NutriGlow — Fuel your week, effortlessly.</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link
+    href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;800&display=swap"
+    rel="stylesheet"
+  />
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}" />
+</head>
+<body>
+  <!-- Language toggle, present on every page -->
+  <div class="lang-toggle" role="group" aria-label="Language switch">
+    <button type="button" id="lang-en-btn" data-lang="en">EN</button>
+    <button type="button" id="lang-ar-btn" data-lang="ar">AR</button>
+  </div>
+
+  <main class="home-wrapper">
+    <div class="brand-mark">
+      <div class="glyph">
+        <svg width="28" height="28" viewBox="0 0 24 24" fill="none">
+          <path
+            d="M12 3C9 3 6.5 5.5 6.5 9c0 4.5 3.5 8 5.5 10 2-2 5.5-5.5 5.5-10C17.5 5.5 15 3 12 3z"
+            fill="white"
+            opacity="0.95"
+          />
+        </svg>
+      </div>
+      <h1 id="brand-name">NutriGlow</h1>
+      <p class="slogan" id="brand-slogan">Fuel your week, effortlessly.</p>
+    </div>
+
+    <form class="form-card" id="meal-form" novalidate>
+      <!-- Gender ----------------------------------------------------- -->
+      <div class="field-group">
+        <label class="field-label" id="label-gender">
+          Gender
+          <span class="field-hint" id="hint-gender"
+            >Used to fine-tune your plan in future updates.</span
+          >
+        </label>
+        <div class="radio-pills" id="gender-options" role="radiogroup">
+          <div class="radio-pill">
+            <input type="radio" name="gender" id="gender-male" value="Male" checked />
+            <label for="gender-male" data-i18n="gender_male">Male</label>
+          </div>
+          <div class="radio-pill">
+            <input type="radio" name="gender" id="gender-female" value="Female" />
+            <label for="gender-female" data-i18n="gender_female">Female</label>
+          </div>
+        </div>
+      </div>
+
+      <!-- Diet (dynamically extracted from the dataset) --------------- -->
+      <div class="field-group">
+        <label class="field-label" id="label-diet">
+          Diet
+          <span class="field-hint" id="hint-diet">Pick the eating style that fits you best.</span>
+        </label>
+        <div class="radio-pills" id="diet-options" role="radiogroup">
+          {% for diet in diet_options %}
+          <div class="radio-pill">
+            <input
+              type="radio"
+              name="diet"
+              id="diet-{{ loop.index }}"
+              value="{{ diet }}"
+              {% if loop.first %}checked{% endif %}
+            />
+            <label for="diet-{{ loop.index }}" class="pill-label" data-value="{{ diet }}">{{ diet }}</label>
+          </div>
+          {% endfor %}
+        </div>
+      </div>
+
+      <!-- Lifestyle (dynamically extracted from the dataset) ----------- -->
+      <div class="field-group">
+        <label class="field-label" id="label-lifestyle">
+          Lifestyle
+          <span class="field-hint" id="hint-lifestyle">Tell us how your days usually look.</span>
+        </label>
+        <div class="radio-pills" id="lifestyle-options" role="radiogroup">
+          {% for lifestyle in lifestyle_options %}
+          <div class="radio-pill">
+            <input
+              type="radio"
+              name="lifestyle"
+              id="lifestyle-{{ loop.index }}"
+              value="{{ lifestyle }}"
+              {% if loop.first %}checked{% endif %}
+            />
+            <label for="lifestyle-{{ loop.index }}" class="pill-label" data-value="{{ lifestyle }}">{{ lifestyle }}</label>
+          </div>
+          {% endfor %}
+        </div>
+      </div>
+
+      <!-- Starting week ------------------------------------------------ -->
+      <div class="field-group">
+        <label class="field-label" id="label-starting">
+          Starting week
+          <span class="field-hint" id="hint-starting"
+            >Your 5-day plan always covers Monday through Friday.</span
+          >
+        </label>
+        <div class="radio-pills" id="starting-options" role="radiogroup">
+          <div class="radio-pill">
+            <input type="radio" name="starting_day" id="start-sunday" value="Sunday" checked />
+            <label for="start-sunday" data-i18n="start_sunday">Sunday</label>
+          </div>
+          <div class="radio-pill">
+            <input type="radio" name="starting_day" id="start-monday" value="Monday" />
+            <label for="start-monday" data-i18n="start_monday">Monday</label>
+          </div>
+        </div>
+      </div>
+
+      <button type="submit" class="calculate-btn" id="calculate-btn">Calculate</button>
+      <p class="form-error" id="form-error">Please choose one option in every section before continuing.</p>
+    </form>
+  </main>
+
+  <!-- Full-screen loading overlay shown while /generate is in flight -->
+  <div class="loading-overlay hidden" id="loading-overlay">
+    <div class="spinner"></div>
+    <p id="loading-message">Putting your meals together…</p>
+  </div>
+
+  <script src="{{ url_for('static', filename='js/translations.js') }}"></script>
+  <script src="{{ url_for('static', filename='js/home.js') }}"></script>
+</body>
+</html>
