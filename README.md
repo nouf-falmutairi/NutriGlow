@@ -3,6 +3,7 @@
 A modern, minimalist, bilingual (English/Arabic, full RTL support) meal-planning web app.
 Built with **Flask** (backend) + **pandas** (data filtering) + vanilla **HTML/CSS/JS** (frontend, no build step required).
 
+https://nutriglow-production-6f3b.up.railway.app/
 \---
 
 ## 1\. What this app does
